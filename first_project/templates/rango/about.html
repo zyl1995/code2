@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html>
 
     <head>
@@ -9,6 +10,7 @@
         <h1>about says...</h1>
         hello world! <strong>{{ himessage }}</strong><br />
         <a href="/rango/">rango</a><br />
+        <img src="{% static "images/about.jpg"%}" alt ="Picture of About"/>
     </body>
 
 </html>
