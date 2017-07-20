@@ -13,18 +13,35 @@
         {% if categories %}
             <ul>
                 {% for category in categories %}
-                <li><a href="/rango/category/{{ category.slug }}">
-                    {{ category.name }}
+                <li>
+                    <a href="/rango/category/{{ category.slug }}">
+                        {{ category.name }}
                     </a>
                 </li>
                 {% endfor %}
             </ul>
             {% else %}
                 <strong>There are no categories present.</strong>
-            {% endif %}
+        {% endif %}
+        {% if pages %}
+            <ul>
+                {%for page in pages %}
+                <li>
+                    <a href="{{page.url}}">
+                        {{ page.title }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+         {% else %}
+                <strong>There are no pages present.</strong>
+        {% endif %}
         <!-- <strong>{{ boldmessage }}</strong><br />-->
         <a href="/rango/about/">About</a><br />
         <img src="{% static "images/rango.jpg"%}" alt="Picture of Rango"/><!--new line-->
+
+        <a href="/rango/add_category/">Add a New Category</a><br />
+        <a href="/rango/register/">Please Register</a>
     </body>
 
 </html>
