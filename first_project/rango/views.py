@@ -96,16 +96,30 @@ def about(request):
 
 def category(request, category_name_slug):
 
+
     context_dict = {}
+    context_dict['result_list'] = None
+    context_dict['query'] = None
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            # Run our Bing function to get the results list!
+            result_list = run_query(query)
+
+            context_dict['result_list'] = result_list
+            context_dict['query'] = query
 
     try:
         category = Lategory.objects.get(slug=category_name_slug)
         context_dict['category_name'] = category.name
-        pages=Page.objects.filter(category=category)
+        pages=Page.objects.filter(category=category).order_by('-views')
         context_dict['pages']=pages
         context_dict['category']=category
     except Lategory.DoesNoExist:
         pass
+    if not context_dict['query']:
+        context_dict['query'] = category.name
 
     return render(request, 'rango/category.html', context_dict)
 
@@ -254,11 +268,50 @@ def search(request):
 
 
 
+from django.shortcuts import redirect
+from django.template import RequestContext
+
+
 def track_url(request):
+
+    context = RequestContext(request)
+
+    page_id = None
+
+    url = '/rango/'
 
     if request.method == 'GET':
         if 'page_id' in request.GET:
             page_id = request.GET['page_id']
+            try:
+                page = Page.objects.get(id=page_id)
+                page.views +=1
+                page.save()
+                url = page.url
+            except:
+                pass
+
+    return  redirect(url)
+
+
+@login_required
+def like_category(request):
+
+    cat_id = None
+
+    if request.method == 'GET':
+        cat_id = request.get('category_id')
+
+    likes = 0
+
+    if cat_id:
+        cat =Lategory.objects.get(id=int(cat_id))
+        if cat:
+            likes = cat.likes + 1
+            cat.likes = likes
+            cat.save()
+
+    return  HttpResponse(likes)
 
 
 
