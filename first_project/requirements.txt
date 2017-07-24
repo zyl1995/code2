@@ -1,0 +1,4 @@
+Django==1.7
+django-registration-redux==1.7
+olefile==0.44
+Pillow==4.2.1

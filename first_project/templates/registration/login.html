@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title_block %}The page of Login{% endblock %}
+
+{% block body_block %}
+
+<link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+
+<h1>login</h1>
+
+    <form class="form-signin" method="post" action=".">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">Please sign in</h2>
+<input class="form-control" placeholder="Username" id="id_username" maxlength="254" name="username" type="text" required autofocus=""/>
+<input type="password" class="form-control" placeholder="Password" id="id_password" name="password" type="password" required />
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit" />Sign in</button>
+    </form>
+
+    <p> Forgot Password?
+        <a href="{% url 'auth_password_reset' %}">
+            Reset Password Now!
+        </a>
+    </p>
+    <p> Not have a account?
+        <a href="{% url 'registration_register' %}">
+            Registr Now!
+        </a>
+    </p>
+
+{% endblock %}

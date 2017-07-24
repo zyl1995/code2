@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Search{% endblock %}
+
+{% block body_block %}
+
+    <div class="page-header">
+        <h1>Search with Rango</h1>
+    </div>
+
+    <div class="row">
+
+        <div class="panel panel-primary">
+            <br/>
+
+            <form class="form-inline" id="user_form" method="post" action="{% url 'search' %}">
+                {% csrf_token %}
+                <!-- Display the search form elements here -->
+                <input class="form-control" type="text" size="50" name="query" value="" id="query" />
+                <input class="btn btn-primary" type="submit" name="submit" value="Search" />
+                <br />
+            </form>
+
+            <div class="panel">
+                {% if result_list %}
+                    <div class="panel-heading">
+                    <h3 class="panel-title">Results</h3>
+                    <!-- Display search results in an ordered list -->
+                    <div class="panel-body">
+                        <div class="list-group">
+                            {% for result in result_list %}
+                                <div class="list-group-item">
+                                    <h4 class="list-group-item-heading"><a href="{{ result.link }}">{{ result.title }}</a></h4>
+                                    <p class="list-group-item-text">{{ result.summary }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+ </div>
+
+{% endblock %}
+
+        <!--{-->
+        <!--u'rankingResponse':-->
+
+        <!--{-->
+
+
+        <!--u'sidebar':-->
+        <!--{-->
+        <!--u'items':-->
+        <!--[-->
+        <!--{-->
+        <!--u'answerType': u'RelatedSearches', u'value':-->
+        <!--{-->
+        <!--u'id': u'https://api.cognitive.microsoft.com/api/v5/#RelatedSearches'-->
+        <!--}-->
+        <!--}-->
+        <!--]-->
+        <!--}-->
+
+
+        <!--,u'mainline':-->
+        <!--{-->
+        <!--u'items':-->
+        <!--[-->
+
+        <!--{-->
+        <!--u'answerType': u'WebPages',-->
+        <!--u'value':-->
+        <!--{-->
+        <!--u'id': u'https://api.cognitive.microsoft.com/api/v5/#WebPages.0'-->
+        <!--}-->
+        <!--, u'resultIndex': 0-->
+        <!--}-->
+        <!--,-->
+        <!--{-->
+        <!--u'answerType': u'WebPages', u'value':-->
+        <!--{-->
+        <!--u'id': u'https://api.cognitive.microsoft.com/api/v5/#WebPages.1'-->
+        <!--}-->
+        <!--, u'resultIndex': 1-->
+        <!--}-->
+        <!--,-->
+        <!--{-->
+        <!--u'answerType': u'WebPages', u'value':-->
+        <!--{-->
+        <!--u'id': u'https://api.cognitive.microsoft.com/api/v5/#WebPages.2'-->
+        <!--}-->
+        <!--, u'resultIndex': 2-->
+        <!--}-->
+
+        <!--]-->
+
+
+        <!--}-->
+
+        <!--}-->
+
+
+        <!--, u'_type': u'SearchResponse'-->
+
+        <!--, u'relatedSearches':-->
+        <!--{-->
+
+        <!--u'id': u'https://api.cognitive.microsoft.com/api/v5/#RelatedSearches', u'value':-->
+        <!--[-->
+
+        <!--{-->
+        <!--u'text': u'windows hello 2', u'displayText': u'windows hello 2',-->
+        <!--u'webSearchUrl': u'https://www.bing.com/cr?IG=A1E4ACC1043347738F8251A67DA52FC1&CID=1481C4DF0BAA66161655CE160A6A67C2&rd=1&h=uUbW6dsQ8flKcLu-D8CEc7_i5fuOX62pVvwdHRhfBj0&v=1&r=https%3a%2f%2fwww.bing.com%2fsearch%3fq%3dwindows%2bhello%2b2&p=DevEx,5164.1'-->
+        <!--},-->
+        <!--{-->
+        <!--u'text': u'hello2bizuser', u'displayText': u'hello2bizuser', u'webSearchUrl': u'https://www.bing.com/cr?IG=A1E4ACC1043347738F8251A67DA52FC1&CID=1481C4DF0BAA66161655CE160A6A67C2&rd=1&h=_Z57mffnjEXJwDYS1SsCJF_w0f9D5MSSwp-Kb80wNyA&v=1&r=https%3a%2f%2fwww.bing.com%2fsearch%3fq%3dhello2bizuser&p=DevEx,5165.1'-->
+        <!--}-->
+        <!--]-->
+
+        <!--}-->
+
+        <!--, u'webPages':-->
+        <!--{-->
+
+        <!--u'webSearchUrl': u'https://www.bing.com/cr?IG=A1E4ACC1043347738F8251A67DA52FC1&CID=1481C4DF0BAA66161655CE160A6A67C2&rd=1&h=w6mD5sLCzDN8bKA8ciFYejUjFY8LblaQk7BsfS2qv6c&v=1&r=https%3a%2f%2fwww.bing.com%2fsearch%3fq%3dhello2&p=DevEx,5163.1', u'totalEstimatedMatches': 78, u'someResultsRemoved': True,-->
+        <!--u'value':-->
+        <!--[-->
+
+        <!--{-->
+
+        <!--u'about':-->
+        <!--[-->
+
+        <!--{-->
+        <!--u'name': u'Orkut B\xfcy\xfckk\xf6kten'-->
+        <!--}-->
+
+        <!--]-->
+        <!--, u'name': u'hello network', u'url': u'http://www.bing.com/cr?IG=A1E4ACC1043347738F8251A67DA52FC1&CID=1481C4DF0BAA66161655CE160A6A67C2&rd=1&h=vGYtCtNJ6-oyewkd7aNSRlWrpRstwrFogWaJ11oj78k&v=1&r=http%3a%2f%2fwww.hello.com%2fen%2findex.html&p=DevEx,5060.1', u'dateLastCrawled': u'2017-07-19T08:09:00', u'displayUrl': u'www.hello.com', u'snippet': u'hello connects you with people and content around your passions. Show the world who you are, express what you love, and create meaningful connections.', u'id': u'https://api.cognitive.microsoft.com/api/v5/#WebPages.0'-->
+        <!--}-->
+        <!--,-->
+        <!--{-->
+        <!--u'name': u'hello\uff08\u963f\u9edb\u5c14\xb7\u963f\u5fb7\u91d1\u65af\u4e2a\u4eba\u5355\u66f2\uff09_\u767e\u5ea6\u767e\u79d1', u'url': u'http://www.bing.com/cr?IG=A1E4ACC1043347738F8251A67DA52FC1&CID=1481C4DF0BAA66161655CE160A6A67C2&rd=1&h=oReC8R2ic30L05TKTZceJhCt63xXRT8RhBjji1SlLQQ&v=1&r=http%3a%2f%2fbaike.baidu.com%2fitem%2fHELLO&p=DevEx,5073.1', u'dateLastCrawled': u'2017-07-09T20:28:00', u'displayUrl': u'baike.baidu.com/item/HELLO', u'snippet': u'\u300aHello\u300b\u662f\u82f1\u56fd\u5973\u6b4c\u624b\u963f\u9edb\u5c14\xb7\u963f\u5fb7\u91d1\u65af\u6f14\u5531\u7684\u4e00\u9996\u6d41\u884c\u6b4c\u66f2\uff0c\u6b4c\u8bcd\u3001\u66f2\u8c31\u7531\u963f\u9edb\u5c14\xb7\u963f\u5fb7\u91d1\u65af\u3001\u683c\u83b1\u683c\xb7\u79d1\u5c14\u65af\u6c40\u5408\u4f5c\u7f16\u5199\uff0c\u683c\u83b1\u683c\xb7\u79d1\u5c14\u65af\u6c40\u8d1f\u8d23\u97f3\u4e50\u5236\u4f5c\u3001\u51fa\u7248\u3002\u300aHello ...', u'id': u'https://api.cognitive.microsoft.com/api/v5/#WebPages.1'-->
+        <!--}-->
+        <!--,-->
+        <!--{-->
+        <!--u'name': u'hello\uff08\u8bcd\u8bed\u91ca\u4e49\uff09_\u767e\u5ea6\u767e\u79d1', u'url': u'http://www.bing.com/cr?IG=A1E4ACC1043347738F8251A67DA52FC1&CID=1481C4DF0BAA66161655CE160A6A67C2&rd=1&h=wTDomU-iLao1n2GsghpxYwlOPf-fMcE5aS5G5ypbuW8&v=1&r=http%3a%2f%2fbaike.baidu.com%2fitem%2fhello%2f38467&p=DevEx,5085.1', u'dateLastCrawled': u'2017-07-19T14:26:00', u'displayUrl': u'baike.baidu.com/item/hello/38467', u'snippet': u'hello\u7528\u4f5c\u611f\u53f9\u8bcd\u4e3b\u8981\u7528\u4e8e\u719f\u4eba\u95f4\u6253\u62db\u547c\u2014\u2014\u201c\u5582\u201d\uff0c\u5e38\u53ef\u97f3\u8bd1\u4e3a\u201c\u54c8\u7f57\u201d\uff1b\u4e5f\u53ef\u7528\u4e8e\u547c\u53eb\u8fdc\u5904\u7684\u719f\u4eba\u6216\u964c\u751f\u4eba\uff0c\u4ee5\u5f15\u8d77\u6ce8\u610f\uff1b\u8fd8\u53ef\u4f5c\u4e3a\u6253\u7535\u8bdd\u65f6\u547c\u53eb\u5bf9\u65b9\u4e4b\u7528\u8bed\u3002', u'id': u'https://api.cognitive.microsoft.com/api/v5/#WebPages.2'-->
+        <!--}-->
+        <!--]-->
+        <!--}-->
+        <!--}-->
