@@ -4,10 +4,10 @@ import json
 import urllib, urllib2
 import traceback
 import requests
+from rango import key
 
 # Add your BING_API_KEY
 
-#BING_API_KEY = 'ffbd5f4f16484cc5894cf7cef1fa5d65'
 
 def run_query(search_terms):
     # Specify the base
@@ -54,7 +54,7 @@ def run_query(search_terms):
     #password_mgr.add_password(None, search_url, username, BING_API_KEY)
 
     # Create our results list which we'll populate.
-    headers = {'Ocp-Apim-Subscription-Key':'a1198f61538d4ba79de27627ce892fd1'}
+    headers = {'Ocp-Apim-Subscription-Key':key.key}
     results = []
 
     try:

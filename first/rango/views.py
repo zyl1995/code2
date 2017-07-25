@@ -4,6 +4,9 @@ from rango.models import Lategory
 from rango.models import Page
 from rango.forms import LategoryForm
 
+from django.views.decorators.csrf import csrf_exempt
+
+
 from datetime import  datetime
 
 
@@ -163,6 +166,9 @@ def add_page(request, category_name_slug):
 
 from rango.forms import UserForm, UserProfileForm
 
+def encode_url(str):
+    return str.replace(' ', '_')
+
 
 def register(request):
     #if request.session.test_cookie_worked():
@@ -295,12 +301,17 @@ def track_url(request):
 
 
 @login_required
+@csrf_exempt
 def like_category(request):
 
-    cat_id = None
+    context = RequestContext(request)
 
-    if request.method == 'GET':
-        cat_id = request.get('category_id')
+    cat_id = None
+    #print request
+
+    if request.method == 'POST':
+        cat_id = request.POST['category_id']
+        #print cat_id
 
     likes = 0
 
@@ -312,6 +323,61 @@ def like_category(request):
             cat.save()
 
     return  HttpResponse(likes)
+
+
+def get_category_list(max_resluts=0, starts_with=''):
+    cat_list = []
+    if starts_with:
+        cat_list = Lategory.objects.filter(name__startswith=starts_with)
+    else:
+        cat_list = Lategory.objects.all()
+
+    if max_resluts>0:
+        if len(cat_list) > max_resluts:
+            cat_list = cat_list[:max_resluts]
+    for cat in cat_list:
+        cat.url = encode_url(cat.name)
+
+    return  cat_list
+
+from django.shortcuts import render_to_response
+
+def suggest_category(request):
+    context = RequestContext(request)
+
+    cat_list = []
+    starts_with = ''
+    if request.method == 'GET':
+
+        starts_with = request.GET['suggestion']
+        # print starts_with + '--------------'
+
+    cat_list = get_category_list(8, starts_with)
+
+
+    return render_to_response('rango/categoryPOST_list.html', {'cat_list': cat_list}, context)
+
+@login_required
+@csrf_exempt
+def auto_add_page(request):
+    cat_id = None
+    cat_title = None
+    cat_url = None
+    context_dict = {}
+    if request.method == 'POST':
+        cat_id = request.POST['category_id']
+        cat_title = request.POST['title']
+        cat_url = request.POST['url']
+        if cat_id:
+            category = Lategory.objects.get(id=int(cat_id))
+            p = Page.objects.get_or_create(category=category, title=cat_title, url=cat_url)
+            pages = Page.objects.filter(category=category).order_by('-views')
+
+            context_dict['pages'] = pages
+
+
+    return render(request,'rango/page_list.html',context_dict)
+
 
 
 

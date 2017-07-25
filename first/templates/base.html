@@ -78,6 +78,16 @@
                 {% block side_block %}
                     <!--{% load rango_extras %}-->
                     {% get_category_list category %}
+                    <ul class="nav nav-list">
+                    <li class="nav-header">Find a Category</li>
+        <form>
+        <label></label>
+        <li><input  class="search-query span10" type="text" name="suggestion" value="" id="suggestion" /></li>
+        </form>
+</ul>
+
+<div id="cats">
+</div>
                 {% endblock %}
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
